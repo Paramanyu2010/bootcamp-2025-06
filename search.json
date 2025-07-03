@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Welcome to Los Angeles Data!",
+    "section": "",
+    "text": "This website explores key demographic insights about Los Angeles County using up-to-date Census data.\n Navigate through the Education menu to see interactive maps and analyses of educational attainment by geography and by race."
+  },
+  {
+    "objectID": "education-by-race.html",
+    "href": "education-by-race.html",
+    "title": "Education by Race in Los Angeles County Bachelor’s Degree Attainment (2021 ACS)",
+    "section": "",
+    "text": "This bar chart clearly illustrates the disparities in bachelor’s degree attainment among major racial and ethnic groups in Los Angeles County. Asians have the highest percentage of adults with a bachelor’s degree, followed by Whites, Blacks, and Hispanic/Latino populations. These differences reflect complex social, economic, and historical factors shaping educational opportunities in the region. Understanding these patterns is crucial for policymakers and educators aiming to design targeted interventions that promote educational equity across all communities."
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "About this site"
+  },
+  {
+    "objectID": "education-distribution.html",
+    "href": "education-distribution.html",
+    "title": "Los Angeles",
+    "section": "",
+    "text": "This map reveals the geographic distribution of educational attainment in Los Angeles County using 2023 data. Neighborhoods with higher percentages of residents holding bachelor’s degrees tend to cluster in affluent areas such as Santa Monica, Beverly Hills, and parts of the Westside, highlighted by darker blue-green shades. In contrast, many areas in South Los Angeles and some parts of the San Fernando Valley show lower rates of college degrees. High school graduation rates are generally more evenly distributed but still show some variation. These patterns reflect longstanding educational and socioeconomic disparities across the county, emphasizing the need for targeted educational resources and policies to promote equity."
+  },
+  {
+    "objectID": "education-distribution.html#education-in-los-angeles-county-2023-acs",
+    "href": "education-distribution.html#education-in-los-angeles-county-2023-acs",
+    "title": "Los Angeles",
+    "section": "",
+    "text": "This map reveals the geographic distribution of educational attainment in Los Angeles County using 2023 data. Neighborhoods with higher percentages of residents holding bachelor’s degrees tend to cluster in affluent areas such as Santa Monica, Beverly Hills, and parts of the Westside, highlighted by darker blue-green shades. In contrast, many areas in South Los Angeles and some parts of the San Fernando Valley show lower rates of college degrees. High school graduation rates are generally more evenly distributed but still show some variation. These patterns reflect longstanding educational and socioeconomic disparities across the county, emphasizing the need for targeted educational resources and policies to promote equity."
+  }
+]
