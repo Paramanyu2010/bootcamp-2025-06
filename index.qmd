@@ -1,7 +1,9 @@
 ---
-title: "Los Angeles Education"
+title: "Welcome to Los Angeles Data!"
+author: "Paramanyu Gupta"
+format: html
 ---
 
-This is a Quarto website.
-
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+This website explores key demographic insights about **Los Angeles County** using up-to-date Census data.  
+<br>
+Navigate through the **Education** menu to see interactive maps and analyses of educational attainment by geography and by race.

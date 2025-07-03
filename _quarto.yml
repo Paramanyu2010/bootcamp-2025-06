@@ -2,12 +2,19 @@ project:
   type: website
 
 website:
-  title: "Los Angeles Education"
+  title: "Los Angeles"
   navbar:
     left:
       - href: index.qmd
         text: Home
-      - about.qmd
+      - href: about.qmd
+        text: About
+      - text: Education
+        menu:
+          - text: Geographical Distribution
+            href: education-distribution.qmd
+          - text: Distribution by Race
+            href: education-by-race.qmd
 
 format:
   html:
@@ -16,6 +23,3 @@ format:
       - brand
     css: styles.css
     toc: true
-
-
-

@@ -1,0 +1,83 @@
+---
+author: "Paramanyu Gupta"
+format: html
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+## 🗺️ Education in Los Angeles County (2023 ACS)
+
+```{r}
+#| label: la-education-leaflet
+#| message: false
+#| warning: false
+#| results: "asis"
+
+library(tidycensus)
+library(tidyverse)
+library(janitor)
+library(sf)
+library(leaflet)
+library(scales)
+library(tigris)
+
+options(tigris_progress = FALSE)
+
+data_file <- "la_edu_2023.rds"
+
+if (file.exists(data_file)) {
+  la_edu <- readRDS(data_file)
+} else {
+  edu_vars <- c(
+    total_pop = "B15003_001",
+    hs_grad   = "B15003_017",
+    bachelors = "B15003_022"
+  )
+
+  la_edu <- get_acs(
+    geography = "tract",
+    state     = "CA",
+    county    = "Los Angeles",
+    year      = 2023,
+    survey    = "acs5",
+    variables = edu_vars,
+    geometry  = TRUE,
+    output    = "wide"
+  ) %>%
+    clean_names() %>%
+    mutate(
+      pct_hs_grad   = hs_grad_e   / total_pop_e * 100,
+      pct_bachelors = bachelors_e / total_pop_e * 100
+    )
+
+  saveRDS(la_edu, data_file)
+}
+
+pal <- colorBin("YlGnBu", domain = la_edu$pct_bachelors, bins = 7)
+
+leaflet(la_edu) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(
+    fillColor   = ~pal(pct_bachelors),
+    color       = "#444444",
+    weight      = 0.3,
+    fillOpacity = 0.7,
+    popup = ~paste0(
+      "<strong>", name, "</strong><br>",
+      "High-school grads: ", scales::comma(hs_grad_e), " (", round(pct_hs_grad, 1), "%)<br>",
+      "Bachelor's: ", scales::comma(bachelors_e), " (", round(pct_bachelors, 1), "%)"
+    )
+  ) %>%
+  addLegend(
+    pal     = pal,
+    values  = ~pct_bachelors,
+    title   = "% with Bachelor’s Degree",
+    position = "bottomright"
+  )
+```
+
+<br>
+
+This map reveals the geographic distribution of educational attainment in Los Angeles County using 2023 data. Neighborhoods with higher percentages of residents holding bachelor’s degrees tend to cluster in affluent areas such as Santa Monica, Beverly Hills, and parts of the Westside, highlighted by darker blue-green shades. In contrast, many areas in South Los Angeles and some parts of the San Fernando Valley show lower rates of college degrees. High school graduation rates are generally more evenly distributed but still show some variation. These patterns reflect longstanding educational and socioeconomic disparities across the county, emphasizing the need for targeted educational resources and policies to promote equity.

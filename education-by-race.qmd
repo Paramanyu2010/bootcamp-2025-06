@@ -1,0 +1,94 @@
+---
+title: "Education by Race in Los Angeles County"
+format: html
+execute:
+  echo: false
+  message: false
+  warning: false
+---
+
+## 🎓 Bachelor’s‑Degree Attainment by Race (2021 ACS 1‑Year)
+
+```{r}
+#| label: load-and-plot
+#| message: false
+#| warning: false
+
+library(tidycensus)
+library(tidyverse)
+library(janitor)
+library(ggplot2)
+library(forcats)
+library(scales)
+
+# ── cache file so we don't re‑download each render ─────────────────────────────
+data_file <- "race_edu_la_2021.rds"
+
+if (file.exists(data_file)) {
+  edu_race <- readRDS(data_file)
+
+} else {
+  # race‑specific educational‑attainment variables (table B15002* in ACS‑1)
+  race_vars <- c(
+    "B15002A_001", "B15002A_015",  # White: total & bachelor's
+    "B15002B_001", "B15002B_015",  # Black
+    "B15002D_001", "B15002D_015",  # Asian
+    "B15002I_001", "B15002I_015"   # Hispanic
+  )
+
+  raw <- get_acs(
+    geography = "county",
+    state     = "CA",
+    county    = "Los Angeles",
+    variables = race_vars,
+    year      = 2021,
+    survey    = "acs1",          # ← 1‑year release (needed for B15002A etc.)
+    output    = "wide"
+  ) %>% 
+    clean_names()
+
+  edu_race <- tibble(
+    race = c("White", "Black", "Asian", "Hispanic / Latino"),
+    percent_bachelors = c(
+      raw$b15002a_015e / raw$b15002a_001e,
+      raw$b15002b_015e / raw$b15002b_001e,
+      raw$b15002d_015e / raw$b15002d_001e,
+      raw$b15002i_015e / raw$b15002i_001e
+    ) * 100
+  )
+
+  saveRDS(edu_race, data_file)
+}
+
+# ── plot ───────────────────────────────────────────────────────────────────────
+ggplot(
+  edu_race,
+  aes(
+    x    = percent_bachelors,
+    y    = fct_reorder(race, percent_bachelors),
+    fill = race
+  )
+) +
+  geom_col(show.legend = FALSE, width = 0.6) +
+  geom_text(
+    aes(label = sprintf("%.1f%%", percent_bachelors)),
+    hjust = -0.15, size = 5
+  ) +
+  scale_x_continuous(
+    labels = label_percent(scale = 1),
+    expand = expansion(mult = c(0, 0.15))
+  ) +
+  scale_fill_brewer(palette = "Set2") +
+  labs(
+    x        = NULL,
+    y        = NULL,
+    title    = "Bachelor’s Degree Attainment by Race (Los Angeles County, 2021)",
+    subtitle = "Source: 2021 ACS 1‑year, Table B15002*",
+    caption  = "Note: ACS 1‑year data used because race‑specific tables are not\navailable in the 5‑year release."
+  ) +
+  theme_minimal(base_size = 16) +
+  theme(
+    panel.grid.major.y = element_blank(),
+    plot.caption       = element_text(size = 10, margin = margin(t = 10))
+  )
+```
