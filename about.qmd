@@ -2,4 +2,5 @@
 title: "About"
 ---
 
-About this site
+Made by Paramanyu Gupta
+I used US Census Bureau Data and AI Tools to create this project.
